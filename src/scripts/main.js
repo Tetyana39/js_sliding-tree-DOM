@@ -5,19 +5,18 @@ const treeItems = document.querySelectorAll('.tree li');
 
 treeItems.forEach((li) => {
   // Отримуємо текст вузла (без дочірніх <ul>)
-  const text = li.firstChild.textContent.trim();
+  const firstNode = li.firstChild;
 
-  if (!text) {
-    return;
+  if (
+    firstNode &&
+    firstNode.nodeType === Node.TEXT_NODE &&
+    firstNode.textContent.trim()
+  ) {
+    const span = document.createElement('span');
+
+    span.textContent = firstNode.textContent.trim();
+    firstNode.replaceWith(span);
   }
-
-  // Створюємо <span> з текстом заголовка
-  const span = document.createElement('span');
-
-  span.textContent = text;
-
-  // Замінюємо текстовий вузол на <span>
-  li.firstChild.replaceWith(span);
 });
 
 // Делегування кліку
